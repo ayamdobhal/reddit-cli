@@ -7,7 +7,7 @@ import pathlib, os
 def banner():
 	print('''
 	██████╗ ███████╗██████╗ ██████╗ ██╗████████╗    ██████╗██╗     ██╗
-	██╔══██╗██╔════╝██╔══██╗██╔══██╗██║╚══██╔══╝   ██╔════╝██║     ██║S
+	██╔══██╗██╔════╝██╔══██╗██╔══██╗██║╚══██╔══╝   ██╔════╝██║     ██║
 	██████╔╝█████╗  ██║  ██║██║  ██║██║   ██║█████╗██║     ██║     ██║
 	██╔══██╗██╔══╝  ██║  ██║██║  ██║██║   ██║╚════╝██║     ██║     ██║
 	██║  ██║███████╗██████╔╝██████╔╝██║   ██║      ╚██████╗███████╗██║
@@ -34,9 +34,11 @@ def authenticate():
 def main():
 	banner()
 	if cred_check() != True:
-		print('''credentials.txt does not exist. Refer to the instructions in README.md to create it. 
+		print('''credentials.json does not exist. Refer to the instructions in README.md to create it. 
 		reddit-cli will exit now.''')
 		os.sys.exit()
-	global REDDIT = authenticate()
-while __name__ == '__main__':
+	global REDDIT
+	REDDIT = authenticate()
+	
+if __name__ == '__main__':
 	main()
