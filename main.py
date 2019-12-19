@@ -37,6 +37,6 @@ def main():
 		print('''credentials.txt does not exist. Refer to the instructions in README.md to create it. 
 		reddit-cli will exit now.''')
 		os.sys.exit()
-	REDDIT = authenticate()
+	global REDDIT = authenticate()
 while __name__ == '__main__':
 	main()
