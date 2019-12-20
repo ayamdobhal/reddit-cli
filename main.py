@@ -5,6 +5,7 @@ import pathlib, os, platform, time
 import subreddit.scraper
 from choices import choices
 from getpass import getpass as gp
+import urllib.request
 
 def banner():
 	print('''
