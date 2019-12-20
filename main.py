@@ -1,7 +1,9 @@
 import praw
 import json
-from getpass import getpass
-import pathlib, os
+from stdiomask import getpass
+import pathlib, os, platform
+import subreddit.scraper
+from choices import choices
 
 
 def banner():
@@ -14,6 +16,16 @@ def banner():
 	╚═╝  ╚═╝╚══════╝╚═════╝ ╚═════╝ ╚═╝   ╚═╝       ╚═════╝╚══════╝╚═╝
 	''')
 	print('''\t\t\t\t\tby /u/AyamDobhal and /u/VineetAhujaX\n\n\n''')
+
+def clrscr():
+	if platform.system() == 'Linux':
+		os.system('clear')
+	elif platform.system() == 'Windows':
+		os.system('cls')
+
+def quit():
+	print('Exiting...')
+	os.sys.exit()
 
 def cred_check():
 	creds = pathlib.Path.cwd() /'credentials.json'
@@ -30,19 +42,28 @@ def authenticate():
 				password = getpass('Enter your reddit password: ')
 			)
 	try:
-		print('Welcome /u/%s!'%(reddit.user.me()))
+		print('Welcome /u/%s!\n\n'%(reddit.user.me()))
 	except:
 		print('Error: incorrect username/password.\nExiting...')
 		os.sys.exit()
 	return reddit
 
 def main():
-	banner()
 	if cred_check() != True:
 		print('''credentials.json does not exist. Refer to the instructions in README.md to create it. 
 		reddit-cli will exit now.''')
 		os.sys.exit()
 	REDDIT = authenticate()
+	while True:
+		clrscr()
+		banner()
+		choice = input('''Welcome to reddit-cli! What do you want to do today?\n%s\n'''%(choices))
+		if choice.lower() == 'h':
+			subreddit.scraper.get_hot(REDDIT)
+		elif choice.lower() == 'q':
+			quit()
+		else:
+			raise Warning('Inavlid choice!\n\n')
 	
 if __name__ == '__main__':
 	main()
