@@ -21,7 +21,7 @@ def get_hot(reddit):
             print(submission.title, 'id=%s'%(submission.id))
             print('score=%s'%(submission.score))
             choice = input('''Do you want to open this submission in your browser?
-                         Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
+                         Y for yes, Q to go back to menu or any other key to skip to next submission\n\n>>''')
             print('--------------------------------------------------------------------------------------------')
             if choice.lower() == 'y':
                 webbrowser.open_new_tab('reddit.com/r/%s/comments/%s'%(subreddit,submission.id))
