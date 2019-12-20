@@ -2,3 +2,6 @@
 error.log
 credentials.json
 __pycache__/main.cpython-37.pyc
+subreddit/__pycache__/scraper.cpython-37.pyc
+__pycache__/choices.cpython-37.pyc
+subreddit/__pycache__/__init__.cpython-37.pyc
