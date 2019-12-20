@@ -1,10 +1,10 @@
 import praw
 import json
 from stdiomask import getpass
-import pathlib, os, platform
+import pathlib, os, platform, time
 import subreddit.scraper
 from choices import choices
-
+from getpass import getpass as gp
 
 def banner():
 	print('''
@@ -43,6 +43,7 @@ def authenticate():
 			)
 	try:
 		print('Welcome /u/%s!\n\n'%(reddit.user.me()))
+		time.sleep(2)
 	except:
 		print('Error: incorrect username/password.\nExiting...')
 		os.sys.exit()
@@ -57,7 +58,7 @@ def main():
 	while True:
 		clrscr()
 		banner()
-		choice = input('''Welcome to reddit-cli! What do you want to do today?\n%s\n'''%(choices))
+		choice = gp('''Welcome to reddit-cli! What do you want to do today?\n%s\n'''%(choices))
 		if choice.lower() == 'h':
 			subreddit.scraper.get_hot(REDDIT)
 		elif choice.lower() == 'q':
