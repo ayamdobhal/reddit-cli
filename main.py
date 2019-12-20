@@ -42,6 +42,8 @@ def authenticate():
 				password = getpass('Enter your reddit password: ')
 			)
 	try:
+		if reddit.user.me() == None:
+			raise ValueError()
 		print('Welcome /u/%s!\n\n'%(reddit.user.me()))
 		time.sleep(2)
 	except:
