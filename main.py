@@ -29,6 +29,11 @@ def authenticate():
 				username = input('Enter your reddit username: '),
 				password = getpass('Enter your reddit password: ')
 			)
+	try:
+		print('Welcome /u/%s!'%(reddit.user.me()))
+	except:
+		print('Error: incorrect username/password.\nExiting...')
+		os.sys.exit()
 	return reddit
 
 def main():
@@ -37,7 +42,6 @@ def main():
 		print('''credentials.json does not exist. Refer to the instructions in README.md to create it. 
 		reddit-cli will exit now.''')
 		os.sys.exit()
-	global REDDIT
 	REDDIT = authenticate()
 	
 if __name__ == '__main__':
