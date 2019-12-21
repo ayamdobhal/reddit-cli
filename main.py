@@ -80,6 +80,8 @@ def main():
 			subreddit.scraper.get_new(REDDIT)
 		elif choice.lower() == 'c':
 			subreddit.scraper.get_controversial(REDDIT)
+		elif choice.lower() == 'r':
+			subreddit.scraper.get_rising(REDDIT)
 		elif choice.lower() == 'q':
 			quit()
 		else:
