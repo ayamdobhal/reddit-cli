@@ -1,10 +1,11 @@
 import praw
 import json
 from stdiomask import getpass
-import pathlib, os, platform
+import pathlib, os, platform, time
 import subreddit.scraper
 from choices import choices
-
+from getpass import getpass as gp
+import urllib.request
 
 def banner():
 	print('''
@@ -31,6 +32,13 @@ def cred_check():
 	creds = pathlib.Path.cwd() /'credentials.json'
 	return creds.exists()
 
+def internet_check(host='http://google.com'):
+    try:
+        urllib.request.urlopen(host) #Python 3.x
+        return True
+    except:
+        return False
+
 def authenticate():
 	with open('credentials.json') as creds:
 		credentials = json.load(creds)
@@ -42,7 +50,10 @@ def authenticate():
 				password = getpass('Enter your reddit password: ')
 			)
 	try:
+		if reddit.user.me() == None:
+			raise ValueError()
 		print('Welcome /u/%s!\n\n'%(reddit.user.me()))
+		time.sleep(2)
 	except:
 		print('Error: incorrect username/password.\nExiting...')
 		os.sys.exit()
@@ -53,11 +64,15 @@ def main():
 		print('''credentials.json does not exist. Refer to the instructions in README.md to create it. 
 		reddit-cli will exit now.''')
 		os.sys.exit()
+	if internet_check() == False:
+		print('''Internet connection test failed!''')
+		print('''Make sure you have an internet connection and not using any proxies''')
+		os.sys.exit()
 	REDDIT = authenticate()
 	while True:
 		clrscr()
 		banner()
-		choice = input('''Welcome to reddit-cli! What do you want to do today?\n%s\n'''%(choices))
+		choice = gp('''Welcome to reddit-cli! What do you want to do today?\n%s\n'''%(choices))
 		if choice.lower() == 'h':
 			subreddit.scraper.get_hot(REDDIT)
 		elif choice.lower() == 'q':

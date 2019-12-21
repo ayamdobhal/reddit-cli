@@ -1,7 +1,8 @@
-import os, sys, time
+import os, sys, time, platform
 import webbrowser
 import prawcore
 from contextlib import suppress
+from getpass import getpass
 
 #to add the parent directory to the system path.
 sys.path.append('.')
@@ -18,15 +19,19 @@ def get_hot(reddit):
         print('\nFetching hot submissions from %s...\n\n'%(subreddit.title))
         submissions = []
         for submission in subreddit.hot(limit=10):
-            print(submission.title, 'id=%s'%(submission.id))
+            print(submission.title)
             print('score=%s'%(submission.score))
-            choice = input('''Do you want to open this submission in your browser?
-                         Y for yes, Q to go back to menu or any other key to skip to next submission\n\n>>''')
-            print('--------------------------------------------------------------------------------------------')
+            choice = getpass('''Do you want to open this submission in your browser?
+            Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
+            print('\n\n---------------------------------------\n\n')
             if choice.lower() == 'y':
-                webbrowser.open_new_tab('reddit.com/r/%s/comments/%s'%(subreddit,submission.id))
+                if 'ANDROID_DATA' in os.environ:
+                    os.system('termux-open-url https://reddit.com/r/%s/comments/%s'%(subreddit,submission.id))
+                else:
+                    webbrowser.open_new_tab('https://reddit.com/r/%s/comments/%s'%(subreddit,submission.id))
+                time.sleep(2)
             elif choice.lower() == 'q':
-                break
+               	break
     except:
         print('subreddit does not exist. \nReturning to menu in 2 seconds...')
         time.sleep(2)
