@@ -1,4 +1,4 @@
-# REDDIT-CLI
+
 
 ![reddit-cli-logo](https://i.imgur.com/nZQxFVF.png)
 
