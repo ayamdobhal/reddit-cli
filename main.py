@@ -82,6 +82,8 @@ def main():
 			subreddit.scraper.get_controversial(REDDIT)
 		elif choice.lower() == 'r':
 			subreddit.scraper.get_rising(REDDIT)
+		elif choice.lower() == 't':
+			subreddit.scraper.get_top(REDDIT)
 		elif choice.lower() == 'q':
 			quit()
 		else:
