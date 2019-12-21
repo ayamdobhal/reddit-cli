@@ -66,7 +66,8 @@ def main():
 		os.sys.exit()
 	if internet_check() == False:
 		print('''Internet connection test failed!''')
-		print('''Make sure you have an internet connection and not using any proxies''')
+		print('''Make sure you have a stable internet connection and not using any proxies.''')
+		print('''Exiting...''')
 		os.sys.exit()
 	REDDIT = authenticate()
 	while True:
