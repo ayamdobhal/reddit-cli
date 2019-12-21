@@ -78,10 +78,13 @@ def main():
 			subreddit.scraper.get_hot(REDDIT)
 		elif choice.lower() == 'n':
 			subreddit.scraper.get_new(REDDIT)
+		elif choice.lower() == 'c':
+			subreddit.scraper.get_controversial(REDDIT)
 		elif choice.lower() == 'q':
 			quit()
 		else:
-			raise Warning('Inavlid choice!\n\n')
+			print('Invalid choice! Try again.')
+			time.sleep(1)
 	
 if __name__ == '__main__':
 	main()
