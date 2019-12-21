@@ -20,9 +20,10 @@ def get_hot(reddit):
         submissions = []
         for submission in subreddit.hot(limit=100):
             print(submission.title)
-            print('score=%s'%(submission.score))
-            choice = getpass('''Do you want to open this submission in your browser?
-            Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
+            print('author :', submission.author)
+            print('score = %s'%(submission.score))
+            choice = getpass("Do you want to open this submission in your browser? \\
+            Y for yes, A to go to author's profile, Q to go back to menu or any other key to skip to next submission\n")
             print('\n\n---------------------------------------\n\n')
             if choice.lower() == 'y':
                 if 'ANDROID_DATA' in os.environ:
@@ -32,11 +33,16 @@ def get_hot(reddit):
                 time.sleep(2)
             elif choice.lower() == 'q':
                	break
+            elif choice.lower() == 'a':
+                if 'ANDROID_DATA' in os.environ:
+                    os.system('termux-open-url https://reddit.com/u/%s'%(submission.author))
+                else:
+                    webbrowser.open_new_tab('https://reddit.com/u/%s'%(submission.author))
     except:
         print('subreddit does not exist. \nReturning to menu in 2 seconds...')
         time.sleep(2)
         suppress(Exception)
-        
+
 def get_new(reddit):
     main.clrscr()
     main.banner()
@@ -47,9 +53,10 @@ def get_new(reddit):
         submissions = []
         for submission in subreddit.new(limit=100):
             print(submission.title)
+            print('author :', submission.author)
             print('score=%s'%(submission.score))
-            choice = getpass('''Do you want to open this submission in your browser?
-            Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
+            choice = getpass("Do you want to open this submission in your browser? \\
+            Y for yes, A to go to author's profile, Q to go back to menu or any other key to skip to next submission\n")
             print('\n\n---------------------------------------\n\n')
             if choice.lower() == 'y':
                 if 'ANDROID_DATA' in os.environ:
@@ -59,6 +66,11 @@ def get_new(reddit):
                 time.sleep(2)
             elif choice.lower() == 'q':
                	break
+            elif choice.lower() == 'a':
+                if 'ANDROID_DATA' in os.environ:
+                    os.system('termux-open-url https://reddit.com/u/%s'%(submission.author))
+                else:
+                    webbrowser.open_new_tab('https://reddit.com/u/%s'%(submission.author))
     except:
         print('subreddit does not exist. \nReturning to menu in 2 seconds...')
         time.sleep(2)
@@ -74,9 +86,10 @@ def get_controversial(reddit):
         submissions = []
         for submission in subreddit.controversial(limit=100):
             print(submission.title)
+            print('author : ',submission.author)
             print('score=%s'%(submission.score))
-            choice = getpass('''Do you want to open this submission in your browser?
-            Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
+            choice = getpass("Do you want to open this submission in your browser? \\
+            Y for yes, A to go to author's profile, Q to go back to menu or any other key to skip to next submission\n")
             print('\n\n---------------------------------------\n\n')
             if choice.lower() == 'y':
                 if 'ANDROID_DATA' in os.environ:
@@ -86,6 +99,11 @@ def get_controversial(reddit):
                 time.sleep(2)
             elif choice.lower() == 'q':
                	break
+            elif choice.lower() == 'a':
+                if 'ANDROID_DATA' in os.environ:
+                    os.system('termux-open-url https://reddit.com/u/%s'%(submission.author))
+                else:
+                    webbrowser.open_new_tab('https://reddit.com/u/%s'%(submission.author))
     except:
         print('subreddit does not exist. \nReturning to menu in 2 seconds...')
         time.sleep(2)
@@ -101,9 +119,10 @@ def get_rising(reddit):
         submissions = []
         for submission in subreddit.rising(limit=100):
             print(submission.title)
+            print('author : ', submission.author)
             print('score=%s'%(submission.score))
-            choice = getpass('''Do you want to open this submission in your browser?
-            Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
+            choice = getpass("Do you want to open this submission in your browser? \\
+            Y for yes, A to go to author's profile, Q to go back to menu or any other key to skip to next submission\n")
             print('\n\n---------------------------------------\n\n')
             if choice.lower() == 'y':
                 if 'ANDROID_DATA' in os.environ:
@@ -113,6 +132,11 @@ def get_rising(reddit):
                 time.sleep(2)
             elif choice.lower() == 'q':
                	break
+            elif choice.lower() == 'a':
+                if 'ANDROID_DATA' in os.environ:
+                    os.system('termux-open-url https://reddit.com/u/%s'%(submission.author))
+                else:
+                    webbrowser.open_new_tab('https://reddit.com/u/%s'%(submission.author))
     except:
         print('subreddit does not exist. \nReturning to menu in 2 seconds...')
         time.sleep(2)
@@ -128,9 +152,10 @@ def get_top(reddit):
         submissions = []
         for submission in subreddit.top(limit=100):
             print(submission.title)
+            print('author : ', submission.author)
             print('score=%s'%(submission.score))
-            choice = getpass('''Do you want to open this submission in your browser?
-            Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
+            choice = getpass("Do you want to open this submission in your browser? \\
+            Y for yes, A to go to author's profile, Q to go back to menu or any other key to skip to next submission\n")
             print('\n\n---------------------------------------\n\n')
             if choice.lower() == 'y':
                 if 'ANDROID_DATA' in os.environ:
@@ -140,6 +165,11 @@ def get_top(reddit):
                 time.sleep(2)
             elif choice.lower() == 'q':
                	break
+            elif choice.lower() == 'a':
+                if 'ANDROID_DATA' in os.environ:
+                    os.system('termux-open-url https://reddit.com/u/%s'%(submission.author))
+                else:
+                    webbrowser.open_new_tab('https://reddit.com/u/%s'%(submission.author))
     except:
         print('subreddit does not exist. \nReturning to menu in 2 seconds...')
         time.sleep(2)
