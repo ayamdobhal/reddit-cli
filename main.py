@@ -76,6 +76,8 @@ def main():
 		choice = gp('''Welcome to reddit-cli! What do you want to do today?\n%s\n'''%(choices))
 		if choice.lower() == 'h':
 			subreddit.scraper.get_hot(REDDIT)
+		elif choice.lower() == 'n':
+			subreddit.scraper.get_new(REDDIT)
 		elif choice.lower() == 'q':
 			quit()
 		else:
