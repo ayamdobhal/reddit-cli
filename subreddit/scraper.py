@@ -4,11 +4,15 @@ import prawcore
 from praw.models import Message
 from contextlib import suppress
 from getpass import getpass as gp
+from login import authenticate
 
 #to add the parent directory to the system path.
 sys.path.append('.')
 
 import praw
+
+#initializing the reddit class
+reddit = authenticate()
 
 def clrscr():
     if platform.system().lower() == 'linux':
@@ -105,7 +109,8 @@ class Scraper:
                 print('\t',subreddit)
             choice = gp('\n\nEnter [Y] if you want to open a subreddit.')
             if choice.lower() == 'y':
-                pass #insert browse subreddit option here later
+                subreddit = input('Enter the name of the subreddit: ')
+                Scraper.Subreddit.main(init_subreddit(reddit,subreddit))
 
         def main(self):
             link_karma_count = 0
@@ -152,7 +157,8 @@ class Scraper:
                 print('\t',subreddit)
             choice = gp('\n\nEnter [Y] if you want to open a subreddit.')
             if choice.lower() == 'y':
-                Scraper.Subreddit.main(init_subreddit(subreddit))
+                subreddit = input('Enter the name of the subreddit:')
+                Scraper.Subreddit.main(init_subreddit(reddit,subreddit))
             else:
                 Scraper.Subreddits.main(self)
 
@@ -162,7 +168,8 @@ class Scraper:
                 print('\t',subreddit)
             choice = gp('\n\nEnter [Y] if you want to open a subreddit.')
             if choice.lower() == 'y':
-                Scraper.Subreddit.main(init_subreddit(subreddit))
+                subreddit = input('Enter the name of the subreddit: ')
+                Scraper.Subreddit.main(init_subreddit(reddit,subreddit))
             else:
                 Scraper.Subreddits.main(self)
         
@@ -172,7 +179,8 @@ class Scraper:
                 print('\t',subreddit)
             choice = gp('\n\nEnter [Y] if you want to open a subreddit.')
             if choice.lower() == 'y':
-                Scraper.Subreddit.main(init_subreddit(subreddit))
+                subreddit = input('Enter the name of the subreddit:')
+                Scraper.Subreddit.main(init_subreddit(reddit,subreddit))
             else:    
                 Scraper.Subreddits.main(self)
 
@@ -184,7 +192,7 @@ class Scraper:
             choice = gp('\nEnter [Y] if you want to open any of the above subreddits.')
             if choice.lower() == 'y':
                 subreddit = input('Enter the name of the subreddit:')
-                Scraper.Subreddit.main(init_subreddit(subreddit))
+                Scraper.Subreddit.main(init_subreddit(reddit,subreddit))
             else:    
                 Scraper.Subreddits.main(self)
 
@@ -196,7 +204,7 @@ class Scraper:
             choice = gp('\nEnter [Y] if you want to open any of the above subreddits.')
             if choice.lower() == 'y':
                 subreddit = input('Enter the name of the subreddit:')
-                Scraper.Subreddit.main(init_subreddit(subreddit))
+                Scraper.Subreddit.main(init_subreddit(reddit,subreddit))
             else:    
                 Scraper.Subreddits.main(self)
 
@@ -205,10 +213,10 @@ class Scraper:
             print('Search results:')
             for subreddit in self.search_by_topic(query,limit=10):
                 print('\t',subreddit)
-            choice = gp('\nEnter [Y] if you want to open any of the above subreddits.')
+            choice = gp('\nEnter [Y] if you want to open any of the above subreddits.\n')
             if choice.lower() == 'y':
-                subreddit = input('Enter the name of the subreddit:')
-                Scraper.Subreddit.main(init_subreddit(subreddit))
+                subreddit = input('Enter the name of the subreddit: ')
+                Scraper.Subreddit.main(init_subreddit(reddit,subreddit))
             else:
                 Scraper.Subreddits.main(self)
             
@@ -222,7 +230,7 @@ class Scraper:
 [S] to search for a subreddit by name/description.
 [B] to search for a subreddit by name.
 [T] to search for a subreddit by topic.
-[Q] to return to main menu''')
+[Q] to return to main menu\n''')
             if choice.lower() == 'n':
                 Scraper.Subreddits.NewSubreddits(self)
             elif choice.lower() == 'p':
@@ -244,7 +252,7 @@ class Scraper:
                 Scraper.Subreddits.main(self)
 
     class Subreddit:
-        def __init__(self, subreddit):
+        def __init__(self):
                 self.display_name = self.display_name
                 self.id = self.id
                 self.fullname = self.name
@@ -304,18 +312,18 @@ Y for yes, Q to go back to menu or any other key to skip to next submission\n'''
             banner()
             print('Welcome to /r/%s'%self.display_name)
             print('id of subreddit:',self.id)
-            print('no. of subscribers:\n',self.subscribers)
+            print('no. of subscribers: %s'%self.subscribers)
             if self.user_is_banned:
                 print('''You're banned from this subreddit.''')
             if self.user_is_moderator:
                 print('''You're a moderator of this subreddit.''')
             if self.user_is_subscriber:
                 print('''You're subscribed to this subreddit.''')
-            choice = gp('''What do you want to do here?
+            choice = gp('''\nWhat do you want to do here?
 [H] to display hot submissions.
 [N] to display new submissions.
 [T] to display top submissions.
-[Q] to go back to main menu.''')
+[Q] to go back to main menu.\n''')
             if choice.lower() == 'h':
                 Scraper.Subreddit.Hot(self)
             elif choice.lower() == 'n':
@@ -329,3 +337,54 @@ Y for yes, Q to go back to menu or any other key to skip to next submission\n'''
                 print('Invalid choice entered. Try again...')
                 time.sleep(1)
                 Scraper.Subreddit.main(self)
+
+    class Inbox:
+        def __init__(self):
+            self.mark_read = self.mark_read()
+            self.unread = self.unread()
+            self.mark_unread = self.mark_unread()
+
+        def MarkRead(self,msg):
+            self.mark_read(msg)
+
+        def Unread(self):
+            unread = []
+            for item in self.unread():
+                unread.append(item)
+            if len(unread) == 0:
+                print('You have no unread messages.')
+                time.sleep(1)
+                Scraper.Inbox.main(self)
+            for msg in unread:
+                print('Message id: ',str(msg))
+                print('Sent by:',msg.author.name)
+                print('Subject:',msg.subject)
+                print('Body:',msg.body)
+                choice = gp('''Enter [Y] if you want to mark this message as read. 
+[B] if you want to block the sender.
+[D] if you want to delete this message.
+Any other key to continue.''')
+                if choice.lower() == 'y':
+                    MarkRead(self,msg)
+                elif choice.lower() == 'b':
+                    msg.author.block()
+                elif choice.lower() == 'd':
+                    msg.delete()
+                Scraper.Inbox.main(self)
+
+        def main(self):
+            clrscr()
+            banner()
+            print('Welcome to inbox.')
+            choice = gp('''Enter your choice.
+[U] to view unread messages.
+[Q] to quit to main menu.''')
+            if choice.lower() == 'u':
+                Scraper.Inbox.Unread(self)
+            elif choice.lower() == 'q':
+                print('Returning to main menu as reqested...')
+                time.sleep(1)
+            else:
+                print('Invalid choice entered. Try again...')
+                time.sleep(1)
+                Scraper.Inbox.main(self)
