@@ -1,7 +1,5 @@
 import os, sys, time, platform
 import webbrowser
-import prawcore
-from praw.models import Message
 from contextlib import suppress
 from getpass import getpass as gp
 from login import authenticate

@@ -1,8 +1,7 @@
 import praw
 import json
-import pathlib, os, platform, time
+import os, platform, time
 from getpass import getpass as gp
-import urllib.request
 from login import cred_check, internet_check
 from subreddit.scraper import Scraper, banner, clrscr, quit, init_subreddit, reddit
 
