@@ -4,17 +4,20 @@ from stdiomask import getpass
 import urllib.request
 
 def cred_check():
+	'''A function to check whether credentials.json exists or not.'''
 	creds = pathlib.Path.cwd() /'credentials.json'
 	return creds.exists()
 
 def internet_check():
-    try:
-        urllib.request.urlopen('https://reddit.com/')  
-        return True
-    except:
-        return False
+	'''A function to test the connectivity to https://reddit.com.'''
+	try:
+		urllib.request.urlopen('https://reddit.com/')
+		return True
+	except:
+	    return False
 
 def authenticate():
+	'''A function to authenticate the user and return the reddit instance.'''
 	try:
 		with open('credentials.json') as creds:
 			credentials = json.load(creds)

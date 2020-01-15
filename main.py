@@ -6,6 +6,7 @@ from login import cred_check, internet_check
 from subreddit.scraper import Scraper, banner, clrscr, quit, init_subreddit, reddit
 
 def main():
+	'''The main menu for reddit-cli.'''
 	if cred_check() != True:
 		print('''credentials.json does not exist. Refer to the instructions in README.md to create it. 
 		reddit-cli will exit now.''')
