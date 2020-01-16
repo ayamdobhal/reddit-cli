@@ -381,6 +381,7 @@ Y for yes, Q to go back to menu or any other key to skip to next submission\n'''
                 print('You have no unread messages.')
                 time.sleep(1)
                 Scraper.Inbox.main(self)
+            mark_read = []
             for msg in unread:
                 print('Message id: ',str(msg))
                 print('Sent by:',msg.author.name)
@@ -391,11 +392,12 @@ Y for yes, Q to go back to menu or any other key to skip to next submission\n'''
 [D] if you want to delete this message.
 Any other key to continue.''')
                 if choice.lower() == 'y':
-                    MarkRead(self,msg)
+                    mark_read.append(msg)
                 elif choice.lower() == 'b':
                     msg.author.block()
                 elif choice.lower() == 'd':
                     msg.delete()
+                Scraper.Inbox.MarkRead(self,mark_read)
                 Scraper.Inbox.main(self)
 
         def main(self):
