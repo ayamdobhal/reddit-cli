@@ -18,6 +18,10 @@ def internet_check():
 
 def authenticate():
 	'''A function to authenticate the user and return the reddit instance.'''
+	if cred_check() != True:
+		print('''credentials.json does not exist.''')
+		print('''refer to instructions and create it''')
+		os.sys.exit()
 	try:
 		with open('credentials.json') as creds:
 			credentials = json.load(creds)
