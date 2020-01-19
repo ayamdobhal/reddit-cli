@@ -78,7 +78,7 @@ class Scraper:
                     print('\t'+str(usr))
             gp('Enter any key to go back.')
             Scraper.User.main(self)
-            
+
         def Preferences(self):
             '''A function to output the preferences of the authenticated user.'''
             clrscr()
@@ -89,23 +89,44 @@ class Scraper:
                 prefs.append([pref,option])
             for i in range(len(prefs)//4):
                 print(prefs[i][0],':',prefs[i][1])
-            choice = gp('Do you want to see more preferences?[Y for yes, any other key for no]')
+            choice = gp('''Enter your choice.[Y to see more prefs, U if you want to update any pref, any other key to return to profile]''')
             if choice.lower() == 'y':
                 for i in range(len(prefs)//4,len(prefs)//2):
                     print(prefs[i][0],':',prefs[i][1])
-            choice = gp('Do you want to see more preferences?[Y for yes, any other key for no]')
+            elif choice.lower() == 'u':
+                print('redirecting to reddit.com to update prefs...')
+                time.sleep(1)
+                LinkHandler('https://reddit.com/prefs')
+                Scraper.User.main(self)
+            else:
+                Scraper.User.main(self)
+            choice = gp('Enter you choice.[U if you want to update a pref, any other key to return to profile.]')
             if choice.lower() == 'y':
                 for i in range(len(prefs)//2,len(prefs)//2+len(prefs)//4):
                     print(prefs[i][0],':',prefs[i][1])
-            choice = gp('Do you want to see more preferences?[Y for yes, any other key for no]')
+            elif choice.lower() == 'u':
+                print('redirecting to reddit.com to update prefs...')
+                time.sleep(1)
+                LinkHandler('httpe://reddit.com/prefs')
+                Scraper.User.main(self)
+            else:
+                Scraper.User.main(self)
+            choice = gp('Enter your choice.[Y to see more prefs, U if you want to update any pref, any other key to return to profile.]')
             if choice.lower() == 'y':
                 for i in range(len(prefs)//2+len(prefs)//4,-1):
                     print(prefs[i][0],':',prefs[i][1])
-            pref_update = gp('Do you want to update any preference?[Y for yes, any other key for no]')
-            if pref_update.lower() == 'y':
-                print('Redirecting to reddit.com to change preferences...')
-                time.sleep(2)
-                LinkHandler('https://reddit.com/prefs/')
+                #choice = gp('Do you want to update any pref?[U if yes]')
+                #if choice.lower() == 'u':
+                    #print('redirecting to reddit.com to update prefs...')
+                    #time.sleep(1)
+                    #LinkHandler('https://reddit.com/prefs')
+                    #Scraper.User.main(self)
+                #else:
+                    #Scraper.User.main(self)
+            elif choice.lower() == 'u':
+                print('redirecting to reddit.com to update prefs...')
+                time.sleep(1)
+                LinkHandler('https://reddit.com/prefs')
                 Scraper.User.main(self)
             else:
                 Scraper.User.main(self)
