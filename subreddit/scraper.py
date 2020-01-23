@@ -292,93 +292,53 @@ class Scraper:
 
     class Subreddit:
         '''A class to utilize the reddit.subreddit instance.'''
-        def __init__(self):
-                self.display_name = self.display_name
-                self.id = self.id
-                self.fullname = self.name
-                self.desc = self.public_description
-                self.subscribers = self.subscribers
-                self.user_is_banned = self.user_is_banned
-                self.user_is_moderator = self.user_is_moderator
-                self.user_is_subscriber = self.user_is_subscriber
-                self.hot = self.hot(limit=10)
-                self.top = self.top(limit=10)
-                self.new = self.new(limit=10)
-                
-        def Hot(self):
-            '''A function to fetch 10 hottest submissions from the subreddit.'''
-            print('Fetching 10 hottest submissions from %s... \n\n'%(self.display_name))
-            for submission in self.hot():
+        def show_posts(self, sort):
+            '''A function to show 10 submissions from the subreddit.'''
+            print("Fetching 10 {} submissions from {}... \n\n"
+                  .format(sort['txt'], self.display_name))
+            for submission in sort['func'](limit=10):
                 print(submission.title)
-                print('score=%s'%(submission.score))
-                choice = gp('''Do you want to open this submission in your browser?
-Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
-                if choice.lower() == 'y':
-                    LinkHandler('https://reddit.com/r/%s/comments/%s'%(self.display_name,submission.id))
+                print('score={}'.format(submission.score))
+                choice = gp("[y] to open this submission in your " +
+                            "browser, [q] to go back to menu, or " +
+                            "any other key to skip to the next post\n").lower()
+                if choice == "y":
+                    LinkHandler('https://redd.it/' + submission.id)
                     time.sleep(2)
-                elif choice.lower() == 'q':
-                    break
-            Scraper.Subreddit.main(self)
-        
-        def Top(self):
-            '''A function to fetch top 10 submissions from the subreddit.'''
-            print('Fetching top 10 submissions from %s... \n\n'%(self.display_name))
-            for submission in self.top():
-                print(submission.title)
-                print('score=%s'%(submission.score))
-                choice = gp('''Do you want to open this submission in your browser?
-Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
-                if choice.lower() == 'y':
-                    LinkHandler('https://reddit.com/r/%s/comments/%s'%(self.display_name,submission.id))
-                    time.sleep(2)
-                elif choice.lower() == 'q':
+                elif choice == "q":
                     break
             Scraper.Subreddit.main(self)
 
-        def New(self):
-            '''A function to fetch 10 latest submissions from the subreddit.'''
-            print('Fetching 10 newest submissions from %s... \n\n'%(self.display_name))
-            for submission in self.new():
-                print(submission.title)
-                print('score=%s'%(submission.score))
-                choice = gp('''Do you want to open this submission in your browser?
-Y for yes, Q to go back to menu or any other key to skip to next submission\n''')
-                if choice.lower() == 'y':
-                    LinkHandler('https://reddit.com/r/%s/comments/%s'%(self.display_name,submission.id))
-                    time.sleep(2)
-                elif choice.lower() == 'q':
-                    break
-            Scraper.Subreddit.main(self)
-        
         def main(self):
             '''The main menu for the subreddit class.'''
             clrscr()
             banner()
-            print('Welcome to /r/%s'%self.display_name)
-            print('id of subreddit:',self.id)
-            print('no. of subscribers: %s'%self.subscribers)
+            print("Welcome to /r/{}".format(self.display_name))
+            print("Id of subreddit: ".format(self.id))
+            print("No. of subscribers: {}".format(self.subscribers))
             if self.user_is_banned:
-                print('''You're banned from this subreddit.''')
+                print("You're banned from this subreddit.")
             if self.user_is_moderator:
-                print('''You're a moderator of this subreddit.''')
+                print("You're a moderator of this subreddit.")
             if self.user_is_subscriber:
-                print('''You're subscribed to this subreddit.''')
-            choice = gp('''\nWhat do you want to do here?
-[H] to display hot submissions.
-[N] to display new submissions.
-[T] to display top submissions.
-[Q] to go back to main menu.\n''')
-            if choice.lower() == 'h':
-                Scraper.Subreddit.Hot(self)
-            elif choice.lower() == 'n':
-                Scraper.Subreddit.New(self)
-            elif choice.lower() == 't':
-                Scraper.Subreddit.Top(self)
-            elif choice.lower() == 'q':
-                print('Returning to main menu as requested...')
+                print("You're subscribed to this subreddit.")
+            choice = gp("\nWhat do you want to do here?\n" +
+                        "[h] to display hot submissions.\n" +
+                        "[n] to display new submissions.\n" +
+                        "[t] to display top submissions.\n" +
+                        "[q] to go back to main menu.\n").lower()
+            sort_types = {
+                'h': {'txt': 'hot', 'func': self.hot},
+                't': {'txt': 'top', 'func': self.top},
+                'n': {'txt': 'new', 'func': self.new}
+            }
+            if choice in sort_types:
+                Scraper.Subreddit.show_posts(self, sort_types[choice])
+            elif choice == "q":
+                print("Returning to main menu as requested...")
                 time.sleep(1)
             else:
-                print('Invalid choice entered. Try again...')
+                print("Invalid choice entered. Try again...")
                 time.sleep(1)
                 Scraper.Subreddit.main(self)
 
