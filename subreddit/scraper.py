@@ -115,14 +115,6 @@ class Scraper:
             if choice.lower() == 'y':
                 for i in range(len(prefs)//2+len(prefs)//4,-1):
                     print(prefs[i][0],':',prefs[i][1])
-                #choice = gp('Do you want to update any pref?[U if yes]')
-                #if choice.lower() == 'u':
-                    #print('redirecting to reddit.com to update prefs...')
-                    #time.sleep(1)
-                    #LinkHandler('https://reddit.com/prefs')
-                    #Scraper.User.main(self)
-                #else:
-                    #Scraper.User.main(self)
             elif choice.lower() == 'u':
                 print('redirecting to reddit.com to update prefs...')
                 time.sleep(1)
