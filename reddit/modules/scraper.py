@@ -9,9 +9,6 @@ sys.path.append(".")
 
 import praw
 
-# initializing the reddit class
-reddit = authenticate()
-
 
 def clrscr():
     """A function to clear the previous output."""
@@ -35,6 +32,11 @@ def banner():
     )
     print("""\t\t\t\t\t\t\tby /u/AyamDobhal\n\n\n""")
 
+
+# initializing the reddit class
+clrscr()
+banner()
+reddit = authenticate()
 
 def quit():
     """A function to exit the script."""

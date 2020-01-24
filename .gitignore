@@ -2,4 +2,5 @@
 error.log
 credentials.json
 __pycache__/*
-subreddit/__pycache__/*
+reddit/modules/__pycache__/*
+reddit/__pycache__/*
