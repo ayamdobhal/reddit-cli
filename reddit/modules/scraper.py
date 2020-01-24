@@ -2,7 +2,7 @@ import os, sys, time, platform
 import webbrowser
 from contextlib import suppress
 from getpass import getpass as gp
-from login import authenticate
+from reddit.modules.login import authenticate
 
 # to add the parent directory to the system path.
 sys.path.append(".")

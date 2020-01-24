@@ -1,10 +1,15 @@
-import praw
 import json
 import os, platform, time
 from getpass import getpass as gp
-from login import cred_check, internet_check
-from subreddit.scraper import Scraper, banner, clrscr, quit, init_subreddit, reddit
+from reddit.modules.login import cred_check, internet_check
+from reddit.modules.scraper import Scraper, banner, clrscr, quit, init_subreddit, reddit
 
+try:
+    import praw, stdiomask
+except ImportError:
+    print("ImportError: Some dependencies are not installed.")
+    print("Enter 'pip install -r requirements.txt' to install them.")
+    quit()
 
 def main():
     """The main menu for reddit-cli."""
