@@ -1,3 +1,11 @@
+# Copyright (C) 2020 AyamDobhal.
+#
+# Licensed under the GNU General Public License v3.0;
+#
+# You may not use this file except in compliance with the license.
+#
+# If you think you will copy my hardwork and get away with it, DMCA welcomes you!
+
 import os, sys, time, platform
 import webbrowser
 from contextlib import suppress
@@ -37,6 +45,7 @@ def banner():
 clrscr()
 banner()
 reddit = authenticate()
+
 
 def quit():
     """A function to exit the script."""

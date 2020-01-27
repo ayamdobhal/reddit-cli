@@ -1,3 +1,11 @@
+# Copyright (C) 2020 AyamDobhal.
+#
+# Licensed under the GNU General Public License v3.0;
+#
+# You may not use this file except in compliance with the license.
+#
+# If you think you will copy my hardwork and get away with it, DMCA welcomes you!
+
 import json, os, pathlib
 import praw
 from stdiomask import getpass
@@ -30,11 +38,11 @@ def authenticate():
             credentials = json.load(creds)
 
         reddit = praw.Reddit(
-            client_id = credentials["client_id"],
-            client_secret = credentials["client_secret"],
-            user_agent = credentials["user_agent"],
-            username = input("Enter your reddit username: "),
-            password = getpass("Enter your reddit password: "),
+            client_id=credentials["client_id"],
+            client_secret=credentials["client_secret"],
+            user_agent=credentials["user_agent"],
+            username=input("Enter your reddit username: "),
+            password=getpass("Enter your reddit password: "),
         )
         if reddit.user.me() == None:
             os.sys.exit()
