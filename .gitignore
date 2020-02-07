@@ -4,4 +4,3 @@ credentials.json
 __pycache__/*
 reddit/modules/__pycache__/*
 reddit/__pycache__/*
-login.txt
