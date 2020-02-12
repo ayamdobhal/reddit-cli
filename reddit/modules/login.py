@@ -10,7 +10,7 @@ import json, os, pathlib
 import praw
 from stdiomask import getpass
 import urllib.request
-from getpass import getpass as gp
+
 
 def cred_check():
     """A function to check whether credentials.json exists or not."""
@@ -37,21 +37,12 @@ def authenticate():
         with open("credentials.json") as creds:
             credentials = json.load(creds)
 
-        if "password" not in credentials.keys() and "username" not in credentials.keys():
-            credentials["username"] = input("Enter your username: ")
-            credentials["password"] = getpass("Enter your password: ")
-            save = gp("Press [Y] if you want to save your details. ")
-            if save.lower() == 'y':
-                with open("credentials.json",'w') as cred:
-                    json.dump(credentials, cred)
-
-
         reddit = praw.Reddit(
             client_id=credentials["client_id"],
             client_secret=credentials["client_secret"],
             user_agent=credentials["user_agent"],
-            username=credentials["username"],
-            password=credentials["password"],
+            username=input("Enter your reddit username: "),
+            password=getpass("Enter your reddit password: "),
         )
         if reddit.user.me() == None:
             os.sys.exit()
