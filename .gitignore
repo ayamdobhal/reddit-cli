@@ -2,6 +2,7 @@
 .idea
 error.log
 credentials.json
+jwt.json
 __pycache__/*
 reddit/modules/__pycache__/*
 reddit/__pycache__/*

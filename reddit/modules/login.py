@@ -6,20 +6,54 @@
 #
 # If you think you will copy my hardwork and get away with it, DMCA welcomes you!
 
+import datetime
 import json
+import jwt
 import os
 import pathlib
 import praw
 import prawcore
 import socket
 
+from base64 import b64encode, b64decode
 from getpass import getpass
+
+
+def gen_jwt():
+    username = input("Enter your reddit username: ")
+    password = getpass("Enter your reddit password: ")
+    secret = getpass("Enter a secret key(Automatically loaded): ")
+    token = jwt.encode({'user': username, 'pass': password,
+                        'exp': datetime.datetime.utcnow() + datetime.timedelta(days=7)},
+                       secret)
+
+    with open("jwt.json", "w+") as jwtfile:
+        jwtfile.write(json.dumps({'token': token.decode("UTF-8"),
+                                  'secret': b64encode(bytes(secret, "UTF-8")).decode("UTF-8")}))
+
+    return {'user': username, 'pass': password}
+
+
+def load_jwt():
+    try:
+        with open("jwt.json", "r") as jwtfile:
+            jwtjson = json.load(jwtfile)
+            data = jwt.decode(jwtjson['token'], b64decode(bytes(jwtjson['secret'], "UTF-8").decode("UTF-8")))
+            return data
+    except (jwt.ExpiredSignatureError, FileNotFoundError):
+        print('Token Error!\n')
+        return gen_jwt()
 
 
 def cred_check():
     """A function to check whether credentials.json exists or not."""
     creds = pathlib.Path.cwd() / "credentials.json"
     return creds.exists()
+
+
+def jwt_check():
+    jwtcreds = pathlib.Path.cwd() / "jwt.json"
+    return jwtcreds.exists()
 
 
 def internet_check():
@@ -41,12 +75,14 @@ def authenticate():
         with open("credentials.json") as creds:
             credentials = json.load(creds)
 
+        user_creds = load_jwt()
+
         reddit = praw.Reddit(
             client_id=credentials["client_id"],
             client_secret=credentials["client_secret"],
             user_agent=credentials["user_agent"],
-            username=input("Enter your reddit username: "),
-            password=getpass("Enter your reddit password: "),
+            username=user_creds['user'],
+            password=user_creds['pass'],
         )
         if not reddit.user.me():
             os.sys.exit()
@@ -54,4 +90,5 @@ def authenticate():
         return reddit
     except prawcore.exceptions.OAuthException:
         print("Incorrect username/password. Try again...")
-        os.sys.exit()
+        gen_jwt()
+        return authenticate()
