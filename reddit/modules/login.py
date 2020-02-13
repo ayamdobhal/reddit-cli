@@ -6,10 +6,14 @@
 #
 # If you think you will copy my hardwork and get away with it, DMCA welcomes you!
 
-import json, os, pathlib
+import json
+import os
+import pathlib
 import praw
-from stdiomask import getpass
-import urllib.request
+import prawcore
+import socket
+
+from getpass import getpass
 
 
 def cred_check():
@@ -21,15 +25,15 @@ def cred_check():
 def internet_check():
     """A function to test the connectivity to https://reddit.com."""
     try:
-        urllib.request.urlopen("https://reddit.com/")
+        socket.create_connection(("www.reddit.com", 443))
         return True
-    except:
+    except OSError:
         return False
 
 
 def authenticate():
     """A function to authenticate the user and return the reddit instance."""
-    if cred_check() != True:
+    if not cred_check():
         print("""credentials.json does not exist.""")
         print("""refer to instructions and create it""")
         os.sys.exit()
@@ -44,10 +48,10 @@ def authenticate():
             username=input("Enter your reddit username: "),
             password=getpass("Enter your reddit password: "),
         )
-        if reddit.user.me() == None:
+        if not reddit.user.me():
             os.sys.exit()
         print("Welcome /u/%s!\n\n" % (reddit.user.me()))
         return reddit
-    except:
+    except prawcore.exceptions.OAuthException:
         print("Incorrect username/password. Try again...")
         os.sys.exit()

@@ -1,6 +1,8 @@
 .vscode/settings.json
+.idea
 error.log
 credentials.json
 __pycache__/*
 reddit/modules/__pycache__/*
 reddit/__pycache__/*
+venv
