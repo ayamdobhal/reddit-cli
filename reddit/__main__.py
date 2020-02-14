@@ -10,7 +10,7 @@ import time
 from getpass import getpass as gp
 from reddit import conf
 from reddit.modules.login import authenticate
-from reddit.modules.scraper import Scraper, Subreddit, banner, clrscr, quit_app
+from reddit.modules.scraper import Scraper, Subreddit, banner, clrscr, quit_app, print_main
 
 try:
     import praw
@@ -49,6 +49,7 @@ def main():
         else:
             print("Invalid choice entered. Try again...")
             time.sleep(1)
+            print_main()
 
 
 if __name__ == "__main__":
