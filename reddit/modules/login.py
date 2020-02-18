@@ -51,11 +51,6 @@ def cred_check():
     return creds.exists()
 
 
-def jwt_check():
-    jwtcreds = pathlib.Path.cwd() / "jwt.json"
-    return jwtcreds.exists()
-
-
 def internet_check():
     """A function to test the connectivity to https://reddit.com."""
     try:
